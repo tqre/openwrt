@@ -13,6 +13,6 @@ jobs:
 
       - name: Test
         run: |
-          pwd \
-          whoami \
+          pwd
+          whoami
           ls -la

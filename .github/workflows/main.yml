@@ -11,8 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Test
+      - name: Test build
         run: |
-          pwd
-          whoami
-          ls -la
+          lscpu
+          #./scripts/feeds update -a && ./scripts/feeds install -a
+          #cp diffconfig .config
+          #make defconfig
+          

@@ -11,10 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Test build
+      - name: Build OpenWrt using diffconfig
         run: |
-          lscpu
-          #./scripts/feeds update -a && ./scripts/feeds install -a
-          #cp diffconfig .config
-          #make defconfig
-          
+          ./scripts/feeds update -a && ./scripts/feeds install -a
+          cp diffconfig .config
+          make defconfig
+          make download
+          make -j2 V=s
+
+      - name: Upload openwrt binary to artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: OpenWrt-testbuild
+          path: bin/targets/lantiq/xrx200/*-sysupgrade.bin

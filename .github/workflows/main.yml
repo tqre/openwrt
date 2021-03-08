@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-20.04
 
     steps:
@@ -22,5 +22,19 @@ jobs:
       - name: Upload openwrt binary to artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: OpenWrt-testbuild
-          path: bin/targets/lantiq/xrx200/*-sysupgrade.bin
+          name: OpenWrt-targets
+          path: bin/targets/lantiq/xrx200/
+
+      - name: Upload packages to artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: OpenWrt-packages
+          path: bin/packages/mips_24kc/
+
+      - name: Release all built packages
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: OpenWrt
+          files: bin/packages/mips_24kc/*/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

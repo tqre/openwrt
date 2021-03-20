@@ -45,7 +45,7 @@ jobs:
           gzip -9nc ipks/Packages > ipks/Packages.gz
 
       - name: Release the package repository
-        uses: meeDamian/github-release@v2
+        uses: meeDamian/github-release@v2.0.3
         with:
           tag: OpenWrt-Fritzbox
           files: ipks/

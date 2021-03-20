@@ -45,9 +45,8 @@ jobs:
           gzip -9nc ipks/Packages > ipks/Packages.gz
 
       - name: Release the package repository
-        uses: softprops/action-gh-release@v1
+        uses: meeDamian/github-release@v2.0
         with:
-          tag_name: OpenWrt-Fritzbox
-          files: ipks/*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: OpenWrt-Fritzbox
+          files: ipks/
+          token: ${{ secrets.GITHUB_TOKEN }}

@@ -49,4 +49,5 @@ jobs:
         with:
           tag: OpenWrt-Fritzbox
           files: ipks/
+          gzip: false
           token: ${{ secrets.GITHUB_TOKEN }}

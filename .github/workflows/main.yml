@@ -31,10 +31,23 @@ jobs:
           name: OpenWrt-packages
           path: bin/packages/mips_24kc/
 
-      - name: Release all built packages
+      - name: Copy all ipk packages to one directory
+        run: |
+          mkdir -vp ipks
+          cp -v bin/targets/lantiq/xrx200/packages/*.ipk ipks/
+          cp -v bin/packages/mips_24kc/*/*.ipk ipks/
+          
+      - name: Fix sha256sum line in index creating script and create the ipk package repo files
+        run: |
+          sed -ie 's/mkhash sha256 $pkg/sha256sum $pkg | awk "{ print $1 }"/' scripts/ipkg-make-index.sh
+          ./scripts/ipkg-make-index.sh ipks > ipks/Packages.manifest
+          grep -vE '^(Maintainer|LicenseFiles|Source|Require)' ipks/Packages.manifest > ipks/Packages
+          gzip -9nc ipks/Packages > ipks/Packages.gz
+
+      - name: Release the package repository
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: OpenWrt
-          files: bin/packages/mips_24kc/*/*
+          tag_name: OpenWrt-Fritzbox
+          files: ipks/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

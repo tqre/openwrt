@@ -45,10 +45,10 @@ jobs:
           gzip -9nc ipks/Packages > ipks/Packages.gz
 
       - name: Release the package repository
-        uses: meeDamian/github-release@v2.0.3
+        uses: marvinpinto/action-automatic-releases@latest
         with:
-          tag: OpenWrt-Fritzbox
-          files: ipks/
-          gzip: false
-          allow_override: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: flase
+          automatic_release_tag: "OpenWrt-Fritzbox"
+          files: |
+            ipks/*

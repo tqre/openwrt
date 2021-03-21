@@ -44,11 +44,10 @@ jobs:
           grep -vE '^(Maintainer|LicenseFiles|Source|Require)' ipks/Packages.manifest > ipks/Packages
           gzip -9nc ipks/Packages > ipks/Packages.gz
 
-      - name: Release the package repository
-        uses: marvinpinto/action-automatic-releases@latest
+      - name: Release all built packages
+        uses: softprops/action-gh-release@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: flase
-          automatic_release_tag: "OpenWrt-Fritzbox"
-          files: |
-            ipks/*
+          tag_name: OpenWrt-Fritzbox
+          files: ipks/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

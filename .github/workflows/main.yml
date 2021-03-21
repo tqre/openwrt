@@ -33,9 +33,8 @@ jobs:
 
       - name: Create a repository structure and package it
         run: |
-          mkdir -vp repo/{,image,ipk/{,base,luci,packages,routing,telephony}}
-          cp -vR bin/targets/lantiq/xrx200/* repo/image
-          cp -vR bin/packages/mips_24kc/* repo/ipk
+          mkdir -vp repo/
+          cp -vR bin/* repo/
           tar -czf repo/openwrt-fritzbox-repo.tar.gz repo/*
           
       - name: Release the repo tarball

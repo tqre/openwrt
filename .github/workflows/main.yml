@@ -36,7 +36,12 @@ jobs:
           mkdir -vp repo/
           cp -vR bin/* repo/
           tar -czf repo/openwrt-fritzbox-repo.tar.gz repo/*
-          
+
+      - name: Clear previous releases
+        uses: ame-yu/action-delete-latest-release@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Release the repo tarball
         uses: softprops/action-gh-release@v1
         with:
